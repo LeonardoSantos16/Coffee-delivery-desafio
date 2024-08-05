@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { fonts } from "../../styles/fonts";
 
 export const HeaderContainer = styled.div`
     display: flex;
@@ -25,21 +26,25 @@ export const HeaderMenu = styled.div`
 export const CardHeader = styled.div`
     display: flex;
     gap: 12px;
-    >.cardLoc{
-        color: #8047F8;
-        padding: 8px;
-        width: 143px;
-        height: 38px;
-        background: #EBE5F9;
-        border-radius: 6px;
-        display: flex;
-        gap: 4px;
-        align-items: center;
-        font-size: 1.4rem;
-        line-height: 130%;
-        
+   
+`
+export const CardLocation = styled.div`
+    color: #8047F8;
+    padding: 8px;
+    width: 143px;
+    height: 38px;
+    background: #EBE5F9;
+    border-radius: 6px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-size: 1.4rem;
+    line-height: 130%;
+    >h2{
+        ${fonts.textS}
     }
 `
+
 
 export const ButtonCheckout = styled.button`
     cursor: pointer;
@@ -49,12 +54,6 @@ export const ButtonCheckout = styled.button`
     height: 38px;
     background: #F1E9C9;
     border-radius: 6px;
+    border: none;
 `
-
-/*
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-
-*/
 

@@ -109,7 +109,57 @@ export const Button = styled.button`
     border: none;
     ${fonts.buttonM}
     cursor: pointer;
+
+    &:hover{
+        background: ${(props) => props.theme['base-hover']};
+    }
+
+    &:active{
+        background: ${(props) => props.theme['purple-light']};
+    }
 `
+
+
+
+
+export const RadioContainer = styled.label`
+    display: flex;
+    gap: .2rem;
+    align-items: center;
+   
+    padding: 16px;
+    width: 100%;
+    height: 5rem;
+    background: ${(props) => props.theme['base-button']};
+    color: ${(props) => props.theme['base-text']};
+    border-radius: 6px;
+    border: none;
+    ${fonts.buttonM}
+    cursor: pointer;
+    position: relative; /* Ensure pseudo-elements are positioned correctly */
+    
+  &:hover {
+    background: ${(props) => props.theme['base-hover']};
+  }
+
+  &:active {
+    background: ${(props) => props.theme['purple-light']};
+  }
+
+  input[type='radio'] {
+    opacity: 0; /* Hide the radio input */
+    position: absolute;
+    cursor: pointer;
+  }
+
+  span.radio-label {
+        display: flex;
+        align-items: center; 
+        gap: 0.8rem; 
+    }
+`
+
+
 
 export const OrderItem = styled.div`
   display: flex;
@@ -164,8 +214,7 @@ export const TotalPrice = styled.div`
     }
 `
 
-export const ButtonConfirm = styled.div`
-
+export const ButtonConfirm = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -177,5 +226,8 @@ export const ButtonConfirm = styled.div`
     ${fonts.buttonG}
     text-transform: uppercase;
     color: ${(props) => props.theme['white']};
+    cursor: pointer;
+    border: none;
 
 `
+

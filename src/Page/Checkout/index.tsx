@@ -1,17 +1,47 @@
 import { MapPin, CreditCard, Bank, Money, CurrencyDollar } from "phosphor-react";
 import { CheckoutCard } from "../../components/CheckoutCard";
-import { CartContext } from '../../contexts/CartContext'
+import { addressUser, CartContext } from '../../contexts/CartContext'
 import { theme } from "../../styles/theme";
 import { Container, ContainerBody, FormSection, BackgroundBox, TitleForm, Title, AddressForm,
     Input, Location, MethodPayment, Button, OrderItem, CheckoutSection, CountOrder, ItensCount, TotalPrice,
-    ButtonConfirm
+    ButtonConfirm, RadioContainer
 } from "./styles";
 import { useContext, useEffect, useState } from "react";
 import { Header } from "../../components/Header";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+// schema de validação
+const schema = z.object({
+    cep: z.string().min(1, "CEP é obrigatório"),
+    street: z.string().min(1, "Rua é obrigatória"),
+    numberAddress: z.string().min(1, "Número é obrigatório"),
+    complement: z.string().optional(),
+    bairro: z.string().min(1, "Bairro é obrigatório"),
+    city: z.string().min(1, "Cidade é obrigatória"),
+    uf: z.string().min(2, "UF é obrigatória"),
+    paymentMethod: z.enum(["Cartão de credito", "Cartão de debito", "Dinheiro"])
+  });
+  
 
 export function Checkout(){
-    const { cart, totalItems } = useContext(CartContext);
+    const { cart, totalItems, addUser } = useContext(CartContext);
     const [totalPrice, setTotalPrice] = useState(1);
+    const navigate = useNavigate();
+    const { register, handleSubmit } = useForm<addressUser>({
+        resolver: zodResolver(schema),
+      });
+    
+      function handleUserSubmit(data : addressUser) {
+        // Aqui você pode processar os dados do formulário, como enviá-los para um servidor
+        addUser(data)
+        navigate('/success');
+      }
+
+
+
     useEffect(() => {
         // Atualiza o preço total quando totalItems mudar
         setTotalPrice((totalItems + 3.5));
@@ -21,7 +51,7 @@ export function Checkout(){
         <Container>
         <Header/>
         <ContainerBody>
-            <FormSection>
+            <FormSection id="order" onSubmit={handleSubmit(handleUserSubmit)}>
                 <h1>Complete seu pedido</h1>
                 <BackgroundBox>
                         <TitleForm>
@@ -32,17 +62,17 @@ export function Checkout(){
                             </Title>
                         </TitleForm>
                         <AddressForm>
-                            <Input type="text" placeholder="CEP"/>
-                            <Input type="text" placeholder="Rua"/>
+                            <Input   {...register("cep")} type="text" placeholder="CEP"/>
+                            <Input {...register("street")} type="text" placeholder="Rua"/>
                             <Location>
-                                <Input type="number" placeholder="Número"/>
-                                <Input type="text" placeholder="Complemento"/>
+                                <Input  {...register("numberAddress")} type="number" placeholder="Número"/>
+                                <Input  {...register("complement")} type="text" placeholder="Complemento"/>
                             </Location>
 
                             <Location>
-                                <Input type="text" placeholder="Bairro"/>
-                                <Input type="text" placeholder="Cidade" />
-                                <Input type="text" placeholder="UF"/>
+                                <Input  {...register("bairro")} type="text" placeholder="Bairro"/>
+                                <Input  {...register("city")} type="text" placeholder="Cidade" />
+                                <Input {...register("uf")} type="text" placeholder="UF"/>
                             </Location>
                         </AddressForm>
                 </BackgroundBox>
@@ -55,18 +85,29 @@ export function Checkout(){
                         </Title>
                     </TitleForm>
                     <MethodPayment>
-                        <Button>
-                            <CreditCard size={16} color={theme.purple} />
-                            CARTÃO DE CRÉDITO
-                        </Button>
-                        <Button>
-                            <Bank size={16} color={theme.purple}/>
-                            CARTÃO DE DÉBITO
-                        </Button>
-                        <Button>
-                            <Money size={16} color={theme.purple}/>
-                            DINHEIRO
-                        </Button>
+                    <RadioContainer>
+                    <input type="radio" id="creditCard" {...register("paymentMethod")} value="Cartão de credito" />
+                    <span className="radio-label">
+                    <CreditCard size={16} color={theme.purple} />
+                    CARTÃO DE CRÉDITO
+                    </span>
+                </RadioContainer>
+
+                <RadioContainer>
+                    <input type="radio" id="debitCard" {...register("paymentMethod")} value="Cartão de debito" />
+                    <span className="radio-label">
+                    <Bank size={16} color={theme.purple} />
+                    CARTÃO DE DÉBITO
+                    </span>
+                </RadioContainer>
+
+                <RadioContainer>
+                    <input type="radio" id="money" {...register("paymentMethod")} value="Dinheiro" />
+                    <span className="radio-label">
+                    <Money size={16} color={theme.purple} />
+          DINHEIRO
+        </span>
+      </RadioContainer>
                     </MethodPayment>
                 </BackgroundBox>
             </FormSection>
@@ -98,8 +139,10 @@ export function Checkout(){
                         <span>R$ {totalPrice.toFixed(2)}</span>
                     </TotalPrice>  
                 </CountOrder>
-                <ButtonConfirm>
+                <ButtonConfirm  type="submit" form="order" >
+                  
                     CONFIRMAR PEDIDO
+                   
                 </ButtonConfirm>
                 </BackgroundBox>
             </CheckoutSection>

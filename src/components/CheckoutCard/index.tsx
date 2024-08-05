@@ -1,9 +1,10 @@
 import { Trash } from "phosphor-react"
-import { ChechoutCardContainer, InfoCoffe, ActionsCoffe, ButtonActions, Line, ButtonRemove } from "./styles"
+import { ChechoutCardContainer, InfoCoffe, ActionsCoffe, ButtonActions, Line, ButtonRemove, Container } from "./styles"
 import { QuantityItem } from "../QuantityItem"
 import { theme } from "../../styles/theme"
 import { useState, useContext, useEffect } from 'react'
 import { CartContext } from '../../contexts/CartContext'
+
 export function CheckoutCard( { coffeCart } : any){
     const [quantity, setQuantity] = useState(coffeCart.quantity);
     const {removeCart, quantityChangeCart} = useContext(CartContext);
@@ -27,6 +28,7 @@ export function CheckoutCard( { coffeCart } : any){
       }, [quantity]);
 
     return(
+        <Container>
         <ChechoutCardContainer>
             <InfoCoffe>
                 <img src={coffeCart.image} />
@@ -48,8 +50,10 @@ export function CheckoutCard( { coffeCart } : any){
                 </ActionsCoffe>
 
             </InfoCoffe>
-            <span> R${coffeCart.price}</span>
+            <span> R${coffeCart.price.toFixed(2)}</span>
             
         </ChechoutCardContainer>
+        <Line/>
+        </Container>
     )
 }

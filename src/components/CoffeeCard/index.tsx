@@ -3,7 +3,7 @@ import { ShoppingCart } from 'phosphor-react'
 import { useTheme } from 'styled-components'
 import { Container, Tags, Buy, Price, ItemCart} from './styles'
 import { QuantityItem } from '../QuantityItem'
-
+import seila from "../../assets/CoffeeTradicional.svg"
 import { useState, useContext } from 'react'
 import { CartContext } from '../../contexts/CartContext'
 import { CoffeProp, CoffeeBuy } from '../../contexts/CartContext'
@@ -51,7 +51,7 @@ export function CoffeeCard({ CoffeProps } : coffeProps){
     }
     return(
         <Container>
-            <img src={ CoffeProps.image }  alt="" />
+            <img src={CoffeProps.image}  alt={CoffeProps.title}/>
             <Tags> 
                 { CoffeProps.tags.map((tag) => (
                     <span>{tag}</span>

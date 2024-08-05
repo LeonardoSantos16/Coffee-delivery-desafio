@@ -20,11 +20,10 @@ export const Information = styled.div`
    
 `
 export const Title = styled.div`
-    /* Encontre o café perfeito para qualquer hora do dia */
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-    height: 124px;
+    height: 12.4rem;
 
     >h1{
         ${fonts.titleXL}
@@ -35,39 +34,49 @@ export const Items = styled.div`
     display: flex;
     gap: 2rem;
     margin-top: 6.6rem;
+    flex-wrap: wrap; 
 
-    >p{
-     
-     color: ${(props) => props.theme['yellow-dark']};
- }
-    >.line1, .line2{
-        display: flex;
-        gap: 2rem;
-        flex-wrap: wrap;
-        
         >.item{
             display: flex;
             gap: 1.2rem;
             align-items: center;
-        } 
+        >p{
+            ${fonts.textM}
+            color: ${(props) => props.theme['base-text']};
+        }
         .icon {
             display: inline-flex; /* Garante que o background não afete outros elementos */
             justify-content: center;
-            background-color: black;
             padding: 8px;
-            /* Brand / Yellow Dark */
             background: #C47F17;
             border-radius: 1000px;
+        }
+    }
+    
+    >.item:nth-child(1) .icon {
+        background: ${(props) => props.theme['yellow-dark']};
+        
+    }
+    >.item:nth-child(1) {
+        width: 23.1rem;
+    }
 
+    >.item:nth-child(2) .icon {
+        background: ${(props) => props.theme['base-text']};
     }
-    >.line1:first-child:{
-        padding: .8rem;
-        background-color: black;
-        border-radius: 999px;
+
+    >.item:nth-child(3) .icon {
+        background: ${(props) => props.theme['yellow']}; 
     }
+
+    >.item:nth-child(4) .icon {
+        background: ${(props) => props.theme['purple']};
+    }
+
 `
+
 export const ImageInfo = styled.div`
-    width: 476px;
-    height: 360px;
+    width: 47.6rem;
+    height: 36.0rem;
 
 `

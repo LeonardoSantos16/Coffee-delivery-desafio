@@ -14,7 +14,7 @@ export const Container = styled.div`
     >img{
         width: 12rem;
         height: 12rem;
-        background: none;
+       
         margin-top: -4rem;
         margin-bottom: 1.2rem;
     }
@@ -78,7 +78,7 @@ export const Buy = styled.div`
 `
 
 export const Price = styled.div`
-    width: 67px;
+
     height: 31px;
 
     font-family: 'Roboto';

@@ -1,5 +1,9 @@
 import styled from "styled-components";
+import { fonts } from "../../styles/fonts";
 
+export const Container = styled.div`
+     width: 100%;
+`
 export const ChechoutCardContainer = styled.div`
     width: 100%;
     height: 8rem;
@@ -34,6 +38,7 @@ export const InfoCoffe = styled.div`
     margin: 0 auto;
     width: 25.5rem;
     height: 6.4rem;
+    
 
     >img{
         width: 6.4rem;
@@ -51,11 +56,7 @@ export const ActionsCoffe = styled.div`
     >h2{
         height: 21px;
 
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 130%;
+        ${fonts.textM}
         color: ${(props) => props.theme['base-subtitle']};
     }
 `
@@ -80,10 +81,9 @@ export const ButtonActions = styled.div`
         color: #574F4D;
     }
 `
-export const Line = styled.line`
-    border-bottom: 1px solid ${(props) => props.theme['purple']};
-    box-sizing: border-box;
-   
+export const Line = styled.div`
+    margin: 2.4rem 0;
+    border-bottom: 1px solid ${(props) => props.theme['base-button']};
 `
 
 export const ButtonRemove = styled.button`

@@ -1,4 +1,6 @@
+
 import { createContext, ReactNode, useEffect, useState } from "react";
+
 
 
 export interface CoffeeBuy{
@@ -21,6 +23,19 @@ interface CoffeeProps{
     totalItems: number
     removeCart: (cart : CoffeeBuy) => void
     quantityChangeCart: (cart : CoffeeBuy, newQuantity : number) => void
+    addUser: (user : addressUser) => void
+    user: addressUser; 
+}
+
+export interface addressUser{
+    cep: number
+    street: string
+    numberAddress: number
+    complement?: string
+    bairro: string
+    city: string
+    uf: string
+    paymentMethod: string
 }
 
 export const CartContext = createContext({} as CoffeeProps)
@@ -32,7 +47,8 @@ interface CartContextProviderProps{
 export function CartContextProvider({ children } : CartContextProviderProps){
     const [cart, setCart] = useState<CoffeeBuy[]>([])
     const [totalItems, setTotalItems] = useState(0)
-
+    const [user, setUser] = useState<addressUser | null>(null);
+      
     function addCart( coffe  : CoffeeBuy){
         setCart((state) => [...state, coffe])
 
@@ -58,20 +74,26 @@ export function CartContextProvider({ children } : CartContextProviderProps){
 
         setTotalItems(total);
       };
+
+      function addUser( user : addressUser){
+        setUser(user)
+        console.log(user)
+    }
     
       useEffect(() => {
         calcTotalPrice(cart);
-        removeCart;
       }, [cart]);
 
-
+    
     return(
         <CartContext.Provider value={{
             cart,
             addCart,
             removeCart,
             totalItems,
-            quantityChangeCart
+            quantityChangeCart, 
+            addUser,
+            user
         }}>
             { children }
         </CartContext.Provider>
