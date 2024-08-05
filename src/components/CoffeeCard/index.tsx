@@ -3,8 +3,10 @@ import { ShoppingCart } from 'phosphor-react'
 import { useTheme } from 'styled-components'
 import { Container, Tags, Buy, Price, ItemCart} from './styles'
 import { QuantityItem } from '../QuantityItem'
-import { useState } from 'react'
 
+import { useState, useContext } from 'react'
+import { CartContext } from '../../contexts/CartContext'
+import { CoffeProp, CoffeeBuy } from '../../contexts/CartContext'
 export interface CoffeeType{
     id: number
     title: string
@@ -21,6 +23,22 @@ export interface coffeProps{
 
 
 export function CoffeeCard({ CoffeProps } : coffeProps){
+    const { addCart, cart} = useContext(CartContext);
+    
+    function handleAddCart(){
+        const coffeCart : CoffeeBuy = {
+            id: CoffeProps.id,
+            title: CoffeProps.title,
+            description: CoffeProps.description,
+            tags: CoffeProps.tags,
+            price: CoffeProps.price,
+            image: CoffeProps.image,
+            quantity: quantity
+        }
+        addCart(coffeCart)
+       
+    }
+
     const theme = useTheme()
     const [quantity, setQuantity] = useState(1);
 
@@ -52,7 +70,7 @@ export function CoffeeCard({ CoffeProps } : coffeProps){
                     quantityPlus={handleIncrementQuantity}
                     quantity={quantity}
                     />
-                    <button>
+                    <button onClick={handleAddCart}>
                         <ShoppingCart size={22} color={theme['base-card']} weight="fill"/>
                     </button>
                 </ItemCart>

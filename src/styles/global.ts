@@ -11,19 +11,14 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 10px;
     }
     body{
+        display: flex;
         flex-direction: column;
         justify-content: center;
         width: 100%;
         height: 100vh;
+        place-items: center;
     }
-    h1{
-        font-family: 'Baloo 2';
-        font-style: normal;
-        font-weight: 800;
-        font-size: 4.8rem;
-        line-height: 130%;
-        color: ${(props) =>props.theme['base-title']};
-    }
+ 
     h3{
         font-family: 'Roboto';
         font-style: normal;

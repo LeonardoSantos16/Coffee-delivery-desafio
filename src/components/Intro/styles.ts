@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { fonts } from "../../styles/fonts";
 export const IntroContainer = styled.div`
     width: 100%;
     height: 54rem;
@@ -25,16 +25,26 @@ export const Title = styled.div`
     flex-direction: column;
     gap: 1.6rem;
     height: 124px;
+
+    >h1{
+        ${fonts.titleXL}
+    }
 `
 
 export const Items = styled.div`
     display: flex;
     gap: 2rem;
     margin-top: 6.6rem;
+
+    >p{
+     
+     color: ${(props) => props.theme['yellow-dark']};
+ }
     >.line1, .line2{
         display: flex;
         gap: 2rem;
         flex-wrap: wrap;
+        
         >.item{
             display: flex;
             gap: 1.2rem;

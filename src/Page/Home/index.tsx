@@ -24,7 +24,7 @@ export function Home(){
             image: '../../assets/CoffeeTradicional.svg'
         },
         {
-            id: 2,
+            id: 3,
             title: "Expresso Tradicional",
             description: "O tradicional café feito com água quente e grãos moídos",
             tags: ["tradicional"],
@@ -32,7 +32,7 @@ export function Home(){
             image: '../../assets/CoffeeTradicional.svg'
         },
         {
-            id: 2,
+            id: 4,
             title: "Expresso Tradicional",
             description: "O tradicional café feito com água quente e grãos moídos",
             tags: ["tradicional"],
@@ -40,7 +40,7 @@ export function Home(){
             image: '../../assets/CoffeeTradicional.svg'
         },
         {
-            id: 2,
+            id: 5,
             title: "Expresso Tradicional",
             description: "O tradicional café feito com água quente e grãos moídos",
             tags: ["tradicional", "vasco"],
@@ -48,7 +48,7 @@ export function Home(){
             image: '../../assets/CoffeeTradicional.svg'
         },
         {
-            id: 2,
+            id: 6,
             title: "Expresso Tradicional",
             description: "O tradicional café feito com água quente e grãos moídos",
             tags: ["tradicional"],
@@ -65,7 +65,7 @@ export function Home(){
                 {
                     coffee.map((coffe) => {
                         return (
-                            <CoffeeCard CoffeProps={coffe}/>
+                            <CoffeeCard key={coffe.id} CoffeProps={coffe}/>
                         )
                     }
                     )

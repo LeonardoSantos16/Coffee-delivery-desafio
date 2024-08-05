@@ -15,6 +15,7 @@ export const QuantityContainer = styled.div`
     >button{
         border: none;
         background: none;
+        cursor: pointer;
     }
 
     >span{

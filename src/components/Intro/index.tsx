@@ -19,13 +19,13 @@ export function Intro(){
                             <div className='icon'>
                             <ShoppingCart size={16} color='white' weight="fill" />
                             </div>
-                            Compra simples e segura
+                            <p>Compra simples e segura</p>
                         </div>
                         <div className='item'>
                             <div className='icon'>
                                 <Package size={16}  color='white' weight='fill' />
                             </div>
-                            Embalagem mantém o café intacto
+                            <p>Embalagem mantém o café intacto</p>
                         </div>
 
                     </div>
@@ -34,13 +34,13 @@ export function Intro(){
                             <div className='icon'>
                                 <Timer size={16} color="#ffffff" weight="fill" />
                             </div>
-                        Entrega rápida e rastreada
+                            <p>Entrega rápida e rastreada</p>
                         </div>
                         <div className='item'>
                             <div className='icon'>
                                 <Coffee size={16} color="#ffffff" weight="fill" /> 
                             </div>
-                            O café chega fresquinho até você
+                            <p>O café chega fresquinho até você</p>
                         </div>
                     </div>
                 </Items>

@@ -111,6 +111,12 @@ export const ItemCart = styled.div`
         height: 38px;
         background-color: ${(props) => props.theme['purple-dark']};
         border-radius: 6px;
-        margin-left: 8px
-    }
+        margin-left: 8px;
+        border: 1px solid transparent;
+        cursor: pointer;
+}
+button:hover {
+  border-color: #646cff;
+}
+    
 `

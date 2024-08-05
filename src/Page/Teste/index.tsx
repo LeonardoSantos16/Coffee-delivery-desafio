@@ -1,7 +1,14 @@
 import { Container, FormSection, AddressForm, FormTitle, Input, Select, PaymentForm, ButtonGroup 
     ,Button, OrderSummary, OrderTitle, OrderItem, OrderDetails, OrderPrice, TotalPrice, ConfirmButton
  } from "./styles";
+import { CheckoutCard } from "../../components/CheckoutCard";
+import { CartContext } from '../../contexts/CartContext'
+import { useState, useContext } from "react";
 export function Pedido(){
+  const { cart } = useContext(CartContext);
+
+  console.log('Carrinho de café:', cart);
+    
     return (
         <Container>
           <FormSection>
@@ -30,31 +37,17 @@ export function Pedido(){
           <OrderSummary>
             <OrderTitle>Cafés selecionados</OrderTitle>
             <OrderItem>
-              <OrderDetails>
-                <p>Expresso Tradicional</p>
-                <OrderPrice>R$ 9,90</OrderPrice>
-              </OrderDetails>
-              <div>
-                <button>-</button>
-                <span>1</span>
-                <button>+</button>
-                <button>REMOVER</button>
-              </div>
+              {
+                cart.map((car) => { 
+                  return(
+                <CheckoutCard coffeCart={car} />
+                  )
+                }
+                )
+              }
+              <TotalPrice>Total: R$ 33,20</TotalPrice>
+              <ConfirmButton>CONFIRMAR PEDIDO</ConfirmButton>
             </OrderItem>
-            <OrderItem>
-              <OrderDetails>
-                <p>Latte</p>
-                <OrderPrice>R$ 19,80</OrderPrice>
-              </OrderDetails>
-              <div>
-                <button>-</button>
-                <span>1</span>
-                <button>+</button>
-                <button>REMOVER</button>
-              </div>
-            </OrderItem>
-            <TotalPrice>Total: R$ 33,20</TotalPrice>
-            <ConfirmButton>CONFIRMAR PEDIDO</ConfirmButton>
           </OrderSummary>
         </Container>
       );
