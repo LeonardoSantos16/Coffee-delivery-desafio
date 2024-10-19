@@ -119,9 +119,6 @@ export const Button = styled.button`
     }
 `
 
-
-
-
 export const RadioContainer = styled.label`
     display: flex;
     gap: .2rem;
@@ -130,26 +127,33 @@ export const RadioContainer = styled.label`
     padding: 16px;
     width: 100%;
     height: 5rem;
-    background: ${(props) => props.theme['base-button']};
+    background: ${(props) => props.$isactive ? props.theme['purple-light'] : props.theme['base-button'] };
     color: ${(props) => props.theme['base-text']};
     border-radius: 6px;
-    border: none;
+
+    border: ${(props) => props.$isactive ? '1px solid #8047F8' : 'none'};
     ${fonts.buttonM}
     cursor: pointer;
-    position: relative; /* Ensure pseudo-elements are positioned correctly */
+    position: relative;
     
-  &:hover {
-    background: ${(props) => props.theme['base-hover']};
-  }
-
-  &:active {
-    background: ${(props) => props.theme['purple-light']};
-  }
+    
+    &:hover {
+        background: ${(props) => props.theme['base-hover']};
+    }
+  
+    &:active {
+        background: ${(props) => props.theme['purple-light']};
+        border: 1px solid #8047F8;
+    }
 
   input[type='radio'] {
-    opacity: 0; /* Hide the radio input */
+    opacity: 0; 
     position: absolute;
     cursor: pointer;
+    &.isActive {
+        background: ${(props) => props.theme['purple-light']};
+        border: 1px solid #8047F8;
+    }
   }
 
   span.radio-label {
@@ -158,8 +162,6 @@ export const RadioContainer = styled.label`
         gap: 0.8rem; 
     }
 `
-
-
 
 export const OrderItem = styled.div`
   display: flex;

@@ -1,101 +1,89 @@
+import { createContext, ReactNode, useEffect, useReducer } from "react";
+import { cartReducer } from '../reducers/reducer'; 
+import { ADD_CART, REMOVE_CART, QUANTITY_CHANGE_CART, ADD_USER } from '../reducers/actions'; 
+import { CoffeeBuy, addressUser } from '../types'; 
 
-import { createContext, ReactNode, useEffect, useState } from "react";
-
-
-
-export interface CoffeeBuy{
-    id: number
-    title: string
-    description: string
-    tags: string[]
-    price: number
-    image: string
-    quantity: number
+interface CartContextProps {
+    cart: CoffeeBuy[];
+    addCart: (coffe: CoffeeBuy) => void;
+    removeCart: (cart: CoffeeBuy) => void;
+    quantityChangeCart: (cart: CoffeeBuy, newQuantity: number) => void;
+    addUser: (user: addressUser) => void;
+    user: addressUser | null;  
+    totalItems: number;
+    quantityItemsCard: number;
 }
 
-export interface  CoffeProp{
-    coffe: CoffeeBuy
+export const CartContext = createContext({} as CartContextProps);
+
+interface CartContextProviderProps {
+    children: ReactNode;
 }
 
-interface CoffeeProps{
-    cart: CoffeeBuy[]
-    addCart: (coffe : CoffeeBuy) => void
-    totalItems: number
-    removeCart: (cart : CoffeeBuy) => void
-    quantityChangeCart: (cart : CoffeeBuy, newQuantity : number) => void
-    addUser: (user : addressUser) => void
-    user: addressUser; 
-}
+export function CartContextProvider({ children }: CartContextProviderProps) {
+    const [state, dispatch] = useReducer(cartReducer, {
+        cart: [],
+        totalItems: 0,
+        user: null,
+        quantityItemsCard: 0,
+    });
 
-export interface addressUser{
-    cep: number
-    street: string
-    numberAddress: number
-    complement?: string
-    bairro: string
-    city: string
-    uf: string
-    paymentMethod: string
-}
+    useEffect(() => {
+        const cartString = localStorage.getItem('cart');
+        if (cartString) {
+            try {
+                const parsedCart: CoffeeBuy[] = JSON.parse(cartString);
+                parsedCart.forEach((item) => {
+                    dispatch({ type: ADD_CART, payload: item });
+                });
+            } catch (error) {
+                console.error('Erro ao fazer parse dos dados do carrinho:', error);
+            }
+        }
+    }, []);
 
-export const CartContext = createContext({} as CoffeeProps)
+    useEffect(() => {
+        const total = state.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        dispatch({ type: 'SET_TOTAL_ITEMS', payload: total });
 
-interface CartContextProviderProps{
-    children: ReactNode
-}
+        const totalQuantity = state.cart.reduce((acc, item) => acc + item.quantity, 0);
+        dispatch({ type: 'SET_QUANTITY_ITEMS_CARD', payload: totalQuantity });
 
-export function CartContextProvider({ children } : CartContextProviderProps){
-    const [cart, setCart] = useState<CoffeeBuy[]>([])
-    const [totalItems, setTotalItems] = useState(0)
-    const [user, setUser] = useState<addressUser | null>(null);
-      
-    function addCart( coffe  : CoffeeBuy){
-        setCart((state) => [...state, coffe])
+        if (state.cart.length > 0) {
+            localStorage.setItem('cart', JSON.stringify(state.cart));
+        } else {
+            localStorage.removeItem('cart');
+        }
+    }, [state.cart]);
 
-    }
+    const addCart = (coffe: CoffeeBuy) => {
+        dispatch({ type: ADD_CART, payload: coffe });
+    };
 
-    function removeCart (coffee: CoffeeBuy) {
-        setCart((prevCart) => 
-          prevCart.filter(item => item.id !== coffee.id)
-        );
-    }
+    const removeCart = (coffee: CoffeeBuy) => {
+        dispatch({ type: REMOVE_CART, payload: coffee });
+    };
 
     const quantityChangeCart = (coffee: CoffeeBuy, newQuantity: number) => {
-        // Cria uma nova versão do carrinho com a quantidade atualizada
-        const updatedCart = cart.map(item =>
-          item.id === coffee.id ? { ...item, quantity: newQuantity } : item
-        );
-        // Atualiza o estado com a nova versão do carrinho
-        setCart(updatedCart);
-      };
-    
-    const calcTotalPrice = (cart: CoffeeBuy[]) => {
-        const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        dispatch({ type: QUANTITY_CHANGE_CART, payload: { id: coffee.id, newQuantity } });
+    };
 
-        setTotalItems(total);
-      };
+    const addUser = (user: addressUser) => {
+        dispatch({ type: ADD_USER, payload: user });
+    };
 
-      function addUser( user : addressUser){
-        setUser(user)
-        console.log(user)
-    }
-    
-      useEffect(() => {
-        calcTotalPrice(cart);
-      }, [cart]);
-
-    
-    return(
+    return (
         <CartContext.Provider value={{
-            cart,
+            cart: state.cart,
             addCart,
             removeCart,
-            totalItems,
-            quantityChangeCart, 
+            quantityChangeCart,
             addUser,
-            user
+            user: state.user,
+            totalItems: state.totalItems,
+            quantityItemsCard: state.quantityItemsCard,
         }}>
-            { children }
+            {children}
         </CartContext.Provider>
-    )
+    );
 }

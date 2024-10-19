@@ -45,7 +45,7 @@ export const Items = styled.div`
             color: ${(props) => props.theme['base-text']};
         }
         .icon {
-            display: inline-flex; /* Garante que o background não afete outros elementos */
+            display: inline-flex;
             justify-content: center;
             padding: 8px;
             background: #C47F17;

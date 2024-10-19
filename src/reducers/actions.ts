@@ -1,0 +1,6 @@
+export const ADD_CART = 'ADD_CART';
+export const REMOVE_CART = 'REMOVE_CART';
+export const QUANTITY_CHANGE_CART = 'QUANTITY_CHANGE_CART';
+export const ADD_USER = 'ADD_USER';
+export const SET_TOTAL_ITEMS = 'SET_TOTAL_ITEMS'; 
+export const SET_QUANTITY_ITEMS_CARD = 'SET_QUANTITY_ITEMS_CARD'; 
